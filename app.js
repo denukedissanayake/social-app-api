@@ -8,12 +8,18 @@ import likeRouter from "./routes/like.js";
 import commentRouter from "./routes/comment.js";
 import authRouter from "./routes/auth.js";
 
-const app = express();
 const PORT = 3005;
 
+const app = express();
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Credentials", true);
+    next();
+});
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:3000"
+}));
 
 app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
