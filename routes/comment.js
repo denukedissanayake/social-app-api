@@ -1,9 +1,9 @@
 import Express from "express";
-import {  } from "../controllers/comment.js";
+import { getCommentsByPostId } from "../controllers/comment.js";
 
 const router = Express.Router();
 
-router.get('', );
+router.get('/:postid', getCommentsByPostId);
 
 
 export default router;
