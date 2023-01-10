@@ -7,10 +7,18 @@ export const getPosts = (req, res) => {
     const token  = req.cookies.accesstoken;
     if(!token) return res.status(401).status("Login to check posts")
 
+    const userId = req.query.userid;
+
     jwt.verify(token, "secret-key-phrase", (err, user) => {
         if(err) return res.status(403).json("Invalid Token");
 
-        const query =  `
+        const query = userId ? `
+            SELECT p.*, u.id AS userid, name, profilepic
+            FROM post AS p 
+            JOIN user AS u ON (p.userid = u.id) 
+            WHERE p.userid = ${userId}
+            ORDER BY p.createdAt DESC 
+            ` : `
             SELECT p.*, u.id AS userid, name, profilepic
             FROM post AS p 
             JOIN user AS u ON (p.userid = u.id) 
