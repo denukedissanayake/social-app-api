@@ -4,6 +4,6 @@ import { getUserById, updateUserById } from "../controllers/user.js";
 const router = Express.Router();
 
 router.get('/:userid', getUserById);
-router.post('/:userid', updateUserById);
+router.put('/', updateUserById);
 
 export default router;

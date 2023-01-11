@@ -44,7 +44,7 @@ export const unfollowUser = (req, res) => {
     jwt.verify(token, "secret-key-phrase", (err, user) => {
         if(err) return res.status(403).json("Invalid Token");
 
-        const query =  `DELETE FROM relationships WHERE  followeruserid=${user.id} AND  followeduserid=${req.body.followeduserid}`;
+        const query =  `DELETE FROM relationships WHERE followeruserid=${user.id} AND  followeduserid=${req.body.followeduserid}`;
 
         db.query(query, (err, data) => {
         if(err) return res.status(500).json(err);
