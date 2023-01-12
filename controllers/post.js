@@ -59,3 +59,22 @@ export const addPosts = (req, res) => {
         });
     });
 }
+
+
+export const deletePost = (req, res) => {
+
+    const token  = req.cookies.accesstoken;
+    if(!token) return res.status(401).status("Login to delete posts")
+
+    jwt.verify(token, "secret-key-phrase", (err, user) => {
+        if(err) return res.status(403).json("Invalid Token");
+
+        const query =  `DELETE FROM post WHERE id=${req.params.postid} AND userid=${user.id}`;
+
+        db.query(query, (err, data) => {
+        if(err) return res.status(500).json(err);
+
+        return res.json("Post Deleted").status(200);
+        });
+    });
+}
